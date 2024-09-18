@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\GradeResource\Pages;
-use App\Filament\Resources\GradeResource\RelationManagers;
-use App\Models\Grade;
+use App\Filament\Resources\GroupResource\Pages;
+use App\Filament\Resources\GroupResource\RelationManagers;
+use App\Models\Group;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class GradeResource extends Resource
+class GroupResource extends Resource
 {
-    protected static ?string $model = Grade::class;
+    protected static ?string $model = Group::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -23,9 +23,7 @@ class GradeResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('code')
-                ->required()
-                ->maxLength(10),
+                //
             ]);
     }
 
@@ -34,8 +32,9 @@ class GradeResource extends Resource
         return $table
             ->columns([
                 //
-                Tables\Columns\TextColumn::make('code')->label('Grados')->suffix('° grado'),
-                Tables\Columns\TextColumn::make('groups_count')->counts('groups')->label('N° de grupos'),
+                Tables\Columns\TextColumn::make('grade.code')->label('Grados')->suffix('° grado'),
+                Tables\Columns\TextColumn::make('section.code')->label('Seccion'),
+                Tables\Columns\TextColumn::make('students_count')->counts('students')->label('N° de estudiantes'),
             ])
             ->filters([
                 //
@@ -53,16 +52,16 @@ class GradeResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\GroupsRelationManager::class,
+            RelationManagers\StudentsRelationManager::class,
         ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListGrades::route('/'),
-            'create' => Pages\CreateGrade::route('/create'),
-            'edit' => Pages\EditGrade::route('/{record}/edit'),
+            'index' => Pages\ListGroups::route('/'),
+            'create' => Pages\CreateGroup::route('/create'),
+            'edit' => Pages\EditGroup::route('/{record}/edit'),
         ];
     }
 }
