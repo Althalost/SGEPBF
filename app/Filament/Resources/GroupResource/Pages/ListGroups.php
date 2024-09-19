@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Filament\Resources\GradeResource\Pages;
+namespace App\Filament\Resources\GroupResource\Pages;
 
-use App\Filament\Resources\GradeResource;
+use App\Filament\Resources\GroupResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Guava\FilamentNestedResources\Concerns\NestedPage;
 
-class ListGrades extends ListRecords
+class ListGroups extends ListRecords
 {
 
     use NestedPage;
 
-    protected static string $resource = GradeResource::class;
+    protected static string $resource = GroupResource::class;
 
     protected function getHeaderActions(): array
     {

@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Filament\Resources\GradeResource\Pages;
+namespace App\Filament\Resources\GroupResource\Pages;
 
-use App\Filament\Resources\GradeResource;
+use App\Filament\Resources\GroupResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 use Guava\FilamentNestedResources\Concerns\NestedPage;
 
-class EditGrade extends EditRecord
+class EditGroup extends EditRecord
 {
 
     use NestedPage;
 
-    protected static string $resource = GradeResource::class;
+    protected static string $resource = GroupResource::class;
 
     protected function getHeaderActions(): array
     {

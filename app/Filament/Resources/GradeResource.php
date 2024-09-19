@@ -4,17 +4,23 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\GradeResource\Pages;
 use App\Filament\Resources\GradeResource\RelationManagers;
+use App\Filament\Resources\GradeResource\RelationManagers\GroupsRelationManager;
 use App\Models\Grade;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Guava\FilamentNestedResources\Ancestor;
+use Guava\FilamentNestedResources\Concerns\NestedResource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class GradeResource extends Resource
 {
+
+    use NestedResource;
+
     protected static ?string $model = Grade::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
@@ -35,7 +41,7 @@ class GradeResource extends Resource
             ->columns([
                 //
                 Tables\Columns\TextColumn::make('code')->label('Grados')->suffix('° grado'),
-                Tables\Columns\TextColumn::make('groups_count')->counts('groups')->label('N° de grupos')->text,
+                Tables\Columns\TextColumn::make('groups_count')->counts('groups')->label('N° de grupos'),
             ])
             ->filters([
                 //
@@ -53,8 +59,13 @@ class GradeResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            GroupsRelationManager::class,
         ];
+    }
+
+    public static function getAncestor(): ?Ancestor
+    {
+        return null;
     }
 
     public static function getPages(): array
@@ -63,6 +74,16 @@ class GradeResource extends Resource
             'index' => Pages\ListGrades::route('/'),
             'create' => Pages\CreateGrade::route('/create'),
             'edit' => Pages\EditGrade::route('/{record}/edit'),
+
+            // In case of relation page.
+            // Make sure the name corresponds to the name of your actual relationship on the model.
+            //'albums' => Pages\ManageGradeGroups::route('/{record}/groups'),
+ 
+            // Needed to create child records
+            // The name should be '{relationshipName}.create':
+            'groups.create' => Pages\CreateGradeGroup::route('/{record}/groups/create'),
         ];
     }
+
+
 }
