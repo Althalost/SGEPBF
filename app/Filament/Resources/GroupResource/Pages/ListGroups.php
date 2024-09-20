@@ -18,6 +18,10 @@ class ListGroups extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
+            Actions\EditAction::make(),
         ];
     }
+    
+    protected ?string $subheading = 'Viewing groups for the grade: ';
+
 }

@@ -39,6 +39,11 @@ class RepresentativesRelationManager extends RelationManager
             ]);
     }
 
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('edit');
+    }
+
     public function table(Table $table): Table
     {
         return $table
@@ -46,6 +51,8 @@ class RepresentativesRelationManager extends RelationManager
             ->columns([
                 Tables\Columns\TextColumn::make('full_name'),
                 Tables\Columns\TextColumn::make('relationship'),
+                Tables\Columns\TextColumn::make('phone'),
+                Tables\Columns\TextColumn::make('address'),
             ])
             ->filters([
                 //
@@ -63,4 +70,5 @@ class RepresentativesRelationManager extends RelationManager
                 ]),
             ]);
     }
+    
 }

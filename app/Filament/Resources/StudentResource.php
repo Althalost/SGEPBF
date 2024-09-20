@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\StudentResource\Pages;
 use App\Filament\Resources\StudentResource\RelationManagers;
 use App\Filament\Resources\StudentResource\RelationManagers\RepresentativesRelationManager;
+use App\Models\Group;
 use App\Models\Representative;
 use App\Models\Student;
 use Filament\Forms;
@@ -17,11 +18,16 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Guava\FilamentNestedResources\Ancestor;
+use Guava\FilamentNestedResources\Concerns\NestedResource;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class StudentResource extends Resource
 {
+    use NestedResource;
+    
     protected static ?string $model = Student::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
@@ -47,7 +53,7 @@ class StudentResource extends Resource
                 ->required(),
                 Forms\Components\DatePicker::make('join_date'),
                 Forms\Components\Select::make('group_id')
-                ->relationship('group', 'id')
+                ->relationship('group' , 'classroom')
                 ->searchable()
                 ->preload()
                 ->createOptionForm([
@@ -76,7 +82,12 @@ class StudentResource extends Resource
                     ->relationship('representatives', 'full_name')
                     ->label('representatives')
                     ->searchable()
-                    ->multiple(),
+                    ->multiple()
+                    ->options(Representative::orderBy('id', 'DESC')->pluck('full_name', 'id'))
+                    ->default(fn () => Representative::latest('id')->limit(1)->get()->pluck('id')->toArray())
+                    //->default([Representative::latest()->first()->id => Representative::latest()->first()->full_name])
+                    //->default(Representative::latest()->first()->id)
+                    ->preload(),
             
 
             ]);
@@ -90,10 +101,12 @@ class StudentResource extends Resource
                 Tables\Columns\TextColumn::make('full_name'),
                 //Tables\Columns\TextColumn::make('students.full_name'),
                 Tables\Columns\TextColumn::make('representatives.full_name'),
-                Tables\Columns\TextColumn::make('representatives.phone'),
+                Tables\Columns\TextColumn::make('representatives.phone')->label('Phone'),
                 Tables\Columns\TextColumn::make('group.grade.code')->suffix('° grado'),
                 Tables\Columns\TextColumn::make('group.section.code'),
             ])
+            ->recordUrl(fn (Model $record): 
+                    string => StudentResource::getUrl('edit', ['record' => $record]))
             ->filters([
                 //
             ])
@@ -116,6 +129,16 @@ class StudentResource extends Resource
         ];
     }
 
+    public static function getAncestor() : ?Ancestor
+    {
+        // Configure the ancestor (parent) relationship here
+        return Ancestor::make(
+            'students', // Relationship name
+            'group', // Inverse relationship name
+        );
+    }
+
+
     public static function getPages(): array
     {
         return [
@@ -123,6 +146,7 @@ class StudentResource extends Resource
             'create' => Pages\CreateStudent::route('/create'),
             'view' => Pages\ViewStudent::route('/{record}'),
             'edit' => Pages\EditStudent::route('/{record}/edit'),
+
         ];
     }
 }

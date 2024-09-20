@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\GroupResource\Pages;
 use App\Filament\Resources\GroupResource\RelationManagers;
+use App\Filament\Resources\GroupResource\RelationManagers\StudentsRelationManager;
 use App\Models\Group;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -24,11 +25,13 @@ class GroupResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static bool $shouldRegisterNavigation = false; 
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                //
+            
             ]);
     }
 
@@ -55,7 +58,7 @@ class GroupResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            StudentsRelationManager::class,
         ];
     }
 
@@ -74,6 +77,9 @@ class GroupResource extends Resource
             'index' => Pages\ListGroups::route('/'),
             'create' => Pages\CreateGroup::route('/create'),
             'edit' => Pages\EditGroup::route('/{record}/edit'),
+
+             // create child pages
+             'students.create' => Pages\CreateGroupStudent::route('/{record}/students/create'),
         ];
     }
 }

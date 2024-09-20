@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Filament\Resources\GradeResource\RelationManagers;
+namespace App\Filament\Resources\GroupResource\RelationManagers;
 
-use App\Filament\Resources\GroupResource;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -12,20 +11,21 @@ use Guava\FilamentNestedResources\Concerns\NestedRelationManager;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class GroupsRelationManager extends RelationManager
+class StudentsRelationManager extends RelationManager
 {
 
     use NestedRelationManager;
 
-    protected static string $relationship = 'groups';
+    protected static string $relationship = 'students';
 
-    public static string $nestedResource = GroupResource::class;
+    protected static bool $shouldRegisterNavigation = true;
+
 
     public function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('id')
+                Forms\Components\TextInput::make('full_name')
                     ->required()
                     ->maxLength(255),
             ]);
@@ -34,11 +34,9 @@ class GroupsRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('id')
+            ->recordTitleAttribute('full_name')
             ->columns([
-                Tables\Columns\TextColumn::make('id'),
-                Tables\Columns\TextColumn::make('section.code'),
-                Tables\Columns\TextColumn::make('students_count')->counts('students')->label('Students'),
+                Tables\Columns\TextColumn::make('full_name'),
             ])
             ->filters([
                 //

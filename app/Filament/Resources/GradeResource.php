@@ -8,6 +8,7 @@ use App\Filament\Resources\GradeResource\RelationManagers\GroupsRelationManager;
 use App\Models\Grade;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Resources\Pages\Page;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -25,14 +26,19 @@ class GradeResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static bool $shouldRegisterNavigation = false; 
+
+    
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('code')
                 ->required()
-                ->maxLength(10),
-            ]);
+                ->maxLength(10)
+                ->hidden(),
+            ])->disabled();
     }
 
     public static function table(Table $table): Table
@@ -42,12 +48,13 @@ class GradeResource extends Resource
                 //
                 Tables\Columns\TextColumn::make('code')->label('Grados')->suffix('° grado'),
                 Tables\Columns\TextColumn::make('groups_count')->counts('groups')->label('N° de grupos'),
+                Tables\Columns\TextColumn::make('groups.section.code')->label('Seccion'),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                //Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -63,6 +70,7 @@ class GradeResource extends Resource
         ];
     }
 
+
     public static function getAncestor(): ?Ancestor
     {
         return null;
@@ -77,13 +85,20 @@ class GradeResource extends Resource
 
             // In case of relation page.
             // Make sure the name corresponds to the name of your actual relationship on the model.
-            //'albums' => Pages\ManageGradeGroups::route('/{record}/groups'),
+             'groups' => Pages\ManageGradeGroups::route('/{record}/groups'),
  
             // Needed to create child records
             // The name should be '{relationshipName}.create':
             'groups.create' => Pages\CreateGradeGroup::route('/{record}/groups/create'),
         ];
     }
-
+/* 
+    public static function getRecordSubNavigation(Page $page): array
+    {
+        return $page->generateNavigationItems([
+            Pages\ManageGradeGroups::class,
+            Pages\EditGrade::class,
+        ]);
+    } */
 
 }

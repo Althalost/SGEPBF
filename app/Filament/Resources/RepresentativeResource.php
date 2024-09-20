@@ -82,4 +82,5 @@ class RepresentativeResource extends Resource
             'edit' => Pages\EditRepresentative::route('/{record}/edit'),
         ];
     }
+    
 }

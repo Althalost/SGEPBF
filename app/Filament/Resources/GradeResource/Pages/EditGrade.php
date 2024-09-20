@@ -14,10 +14,26 @@ class EditGrade extends EditRecord
 
     protected static string $resource = GradeResource::class;
 
-    protected function getHeaderActions(): array
+    /* protected function getHeaderActions(): array
     {
         return [
             Actions\DeleteAction::make(),
+        ];
+    } */
+
+    public function getHeading(): string
+    {
+        $url = url()->current();
+        //$url = str_replace(["http://127.0.0.1:8000/admin/grades/", "/groups"], "", $url);
+        $url = explode("/", $url);
+        return __('Viewing groups for the grade: ' . $url[5]);
+    }
+
+    protected function getFormActions(): array
+    {
+        return [
+            //$this->getSaveFormAction(),
+            //$this->getCancelFormAction(),
         ];
     }
 }

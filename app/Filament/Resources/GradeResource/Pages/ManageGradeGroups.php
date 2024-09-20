@@ -1,25 +1,48 @@
 <?php
 
-namespace App\Filament\Resources\GradeResource\RelationManagers;
+namespace App\Filament\Resources\GradeResource\Pages;
 
+use App\Filament\Resources\GradeResource;
 use App\Filament\Resources\GroupResource;
+use Filament\Actions;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Resources\Pages\ManageRelatedRecords;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Guava\FilamentNestedResources\Concerns\NestedPage;
 use Guava\FilamentNestedResources\Concerns\NestedRelationManager;
+use Guava\FilamentNestedResources\Concerns\NestedResource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class GroupsRelationManager extends RelationManager
-{
+use function PHPSTORM_META\expectedArguments;
 
+class ManageGradeGroups extends ManageRelatedRecords
+{
+    use NestedPage;
     use NestedRelationManager;
+
+    protected static string $resource = GradeResource::class;
 
     protected static string $relationship = 'groups';
 
-    public static string $nestedResource = GroupResource::class;
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    
+    public function getHeading(): string
+    {
+        $url = url()->current();
+        //$url = str_replace(["http://127.0.0.1:8000/admin/grades/", "/groups"], "", $url);
+        $url = explode("/", $url);
+        return __('Viewing groups for the grade: ' . $url[5]);
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return 'Groups';
+    }
+
 
     public function form(Form $form): Form
     {
@@ -37,8 +60,8 @@ class GroupsRelationManager extends RelationManager
             ->recordTitleAttribute('id')
             ->columns([
                 Tables\Columns\TextColumn::make('id'),
+                Tables\Columns\TextColumn::make('grade.code')->suffix('° grado'),
                 Tables\Columns\TextColumn::make('section.code'),
-                Tables\Columns\TextColumn::make('students_count')->counts('students')->label('Students'),
             ])
             ->filters([
                 //
@@ -52,7 +75,7 @@ class GroupsRelationManager extends RelationManager
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                   Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
