@@ -25,6 +25,7 @@ class EditStudent extends EditRecord
         ];
     }
 
+
     protected function afterSave(): void
     {
         $this->dispatch('refreshRepresentativeTable');
@@ -33,6 +34,16 @@ class EditStudent extends EditRecord
     public function getRecord(): Student
     {
         return Student::with('representatives')->findOrFail($this->record->id);
+    }
+
+
+    protected function getActions(): array
+    {
+        return [
+            \Filament\Forms\Components\Actions\Action::make('createNote')
+                ->label('Crear Nota')
+                ->url(fn () => route('filament.resources.notes.create', ['student' => $this->record->id])),
+        ];
     }
 
 }

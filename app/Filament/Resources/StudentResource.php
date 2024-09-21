@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\StudentResource\Pages;
 use App\Filament\Resources\StudentResource\RelationManagers;
+use App\Filament\Resources\StudentResource\RelationManagers\NotesRelationManager;
 use App\Filament\Resources\StudentResource\RelationManagers\RepresentativesRelationManager;
 use App\Models\Grade;
 use App\Models\Group;
@@ -133,6 +134,7 @@ class StudentResource extends Resource
         return [
             //
             RepresentativesRelationManager::class,
+            NotesRelationManager::class,
         ];
     }
 
