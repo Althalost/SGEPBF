@@ -31,7 +31,27 @@ class GroupResource extends Resource
     {
         return $form
             ->schema([
-            
+                Forms\Components\TextInput::make('classroom')
+                ->maxLength(60)
+                ->hiddenOn('edit'),
+                Forms\Components\Select::make('grade_id')
+                ->relationship('grade', 'code')
+                ->searchable()
+                ->preload()
+                ->required()
+                ->hiddenOn('edit'),
+                Forms\Components\Select::make('section_id')
+                ->relationship('section', 'code')
+                ->searchable()
+                ->preload()
+                ->required()
+                ->hiddenOn('edit'),
+                Forms\Components\Select::make('teacher_id')
+                ->relationship('teacher', 'full_name')
+                ->searchable()
+                ->preload()
+                ->required()
+                ->hiddenOn('edit'),
             ]);
     }
 

@@ -36,8 +36,9 @@ class GroupsRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('id')
             ->columns([
-                Tables\Columns\TextColumn::make('id'),
-                Tables\Columns\TextColumn::make('section.code'),
+                Tables\Columns\TextColumn::make('grade_section')
+                ->label('Grade/Section')
+                ->getStateUsing(fn ($record) => $record->grade->code . '° grade - "' . $record->section->code . '"'),
                 Tables\Columns\TextColumn::make('students_count')->counts('students')->label('Students'),
             ])
             ->filters([

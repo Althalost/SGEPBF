@@ -11,6 +11,6 @@ class Representative extends Model
 
     public function students()
     {
-        return $this->belongsToMany(Student::class, 'student_representative');
+        return $this->belongsToMany(Student::class, 'student_representative')->withPivot('relationship')->using(RepresentativeStudent::class);
     }
 }

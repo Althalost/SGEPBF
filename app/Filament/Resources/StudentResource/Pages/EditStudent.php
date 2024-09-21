@@ -25,10 +25,14 @@ class EditStudent extends EditRecord
         ];
     }
 
-    public function getRecord(): Student
+    protected function afterSave(): void
     {
-        return Student::with('repesentatives')->findOrFail($this->recordId);
+        $this->dispatch('refreshRepresentativeTable');
     }
 
+    public function getRecord(): Student
+    {
+        return Student::with('representatives')->findOrFail($this->record->id);
+    }
 
 }

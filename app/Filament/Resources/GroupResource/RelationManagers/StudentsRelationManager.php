@@ -37,12 +37,18 @@ class StudentsRelationManager extends RelationManager
             ->recordTitleAttribute('full_name')
             ->columns([
                 Tables\Columns\TextColumn::make('full_name'),
+                Tables\Columns\TextColumn::make('representatives.full_name'),
+                Tables\Columns\TextColumn::make('representatives.phone')->label('Phone'),
+                Tables\Columns\TextColumn::make('group.grade.code')->suffix('° grado'),
+                Tables\Columns\TextColumn::make('group.section.code'),
             ])
             ->filters([
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make()
+                ->label('Add Student')
+                ->url(fn (): string => route('filament.admin.resources.representatives.create')),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

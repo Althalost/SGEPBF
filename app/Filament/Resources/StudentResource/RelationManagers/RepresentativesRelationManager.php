@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\StudentResource\RelationManagers;
 
+use App\Models\Representative;
+use App\Models\Student;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -13,6 +15,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class RepresentativesRelationManager extends RelationManager
 {
     protected static string $relationship = 'representatives';
+
+    protected $listeners = ['refreshRepresentativeTable' => '$refresh'];
 
     public function form(Form $form): Form
     {
@@ -50,7 +54,8 @@ class RepresentativesRelationManager extends RelationManager
             ->recordTitleAttribute('full_name')
             ->columns([
                 Tables\Columns\TextColumn::make('full_name'),
-                Tables\Columns\TextColumn::make('relationship'),
+                Tables\Columns\TextColumn::make('pivot.relationship')
+                    ->label('Relationship'),
                 Tables\Columns\TextColumn::make('phone'),
                 Tables\Columns\TextColumn::make('address'),
             ])

@@ -34,7 +34,7 @@ class AppServiceProvider extends ServiceProvider
                     ->url(GradeResource::getUrl())
                     ->icon('heroicon-o-academic-cap')
                     ->activeIcon('heroicon-s-academic-cap')
-                    ->isActiveWhen(fn (): bool => request()->routeIs('filament.admin.resources.grades.*') || request()->routeIs('filament.admin.resources.grades/groups.*')),
+                    ->isActiveWhen(fn (): bool => request()->routeIs('filament.admin.resources.grades.*') || request()->routeIs('filament.admin.resources.grades/groups.*') || request()->routeIs('filament.admin.resources.groups.*')),
             ]);
         });
 
@@ -44,7 +44,7 @@ class AppServiceProvider extends ServiceProvider
                     ->url(StudentResource::getUrl())
                     ->icon('heroicon-o-academic-cap')
                     ->activeIcon('heroicon-s-academic-cap')
-                    ->isActiveWhen(fn (): bool => request()->routeIs('filament.admin.resources.students.*')),
+                    ->isActiveWhen(fn (): bool => request()->routeIs('filament.admin.resources.students.*') || request()->routeIs('filament.admin.resources.representatives.*')),
             ]);
         });
     }

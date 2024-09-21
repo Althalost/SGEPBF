@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\StudentResource\Pages;
 use App\Filament\Resources\StudentResource\RelationManagers;
 use App\Filament\Resources\StudentResource\RelationManagers\RepresentativesRelationManager;
+use App\Models\Grade;
 use App\Models\Group;
 use App\Models\Representative;
 use App\Models\Student;
@@ -53,7 +54,13 @@ class StudentResource extends Resource
                 ->required(),
                 Forms\Components\DatePicker::make('join_date'),
                 Forms\Components\Select::make('group_id')
-                ->relationship('group' , 'classroom')
+                ->label('Group')
+                //->relationship('group' , 'id' )
+                ->options(function () {
+                    return Group::with(['grade', 'section'])->get()->mapWithKeys(function ($group) {
+                        return [$group->id => $group->grade->code . '° grade - "' . $group->section->code . '"'];
+                    });
+                })
                 ->searchable()
                 ->preload()
                 ->createOptionForm([
