@@ -9,7 +9,7 @@ class SchoolTerm extends Model
 {
     use HasFactory;
 
-    public function StudentRecord(){
+    public function StudentRecords(){
         return $this->hasMany(StudentRecord::class);
     }
 

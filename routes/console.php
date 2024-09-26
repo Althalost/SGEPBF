@@ -5,4 +5,5 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schedule;
 
 
-Schedule::job(new \App\Jobs\UpdateSchoolTerms())->everyMinute();
+Schedule::job(new \App\Jobs\UpdateSchoolTerms())->timezone('America/Caracas')->dailyAt('05:00');
+Schedule::job(new \App\Jobs\GenerateStudentRecords())->timezone('America/Caracas')->dailyAt('00:11');

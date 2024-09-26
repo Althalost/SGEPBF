@@ -106,7 +106,8 @@ class StudentResource extends Resource
         return $table
             ->columns([
                 //
-                Tables\Columns\TextColumn::make('full_name'),
+                Tables\Columns\TextColumn::make('full_name')
+                ->searchable(),
                 //Tables\Columns\TextColumn::make('students.full_name'),
                 Tables\Columns\TextColumn::make('representatives.full_name'),
                 Tables\Columns\TextColumn::make('representatives.phone')->label('Phone'),

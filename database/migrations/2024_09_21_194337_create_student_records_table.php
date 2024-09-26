@@ -15,10 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('full_name');
             $table->string('ci');
+            $table->string('representative_full_name');
+            $table->string('representative_ci');
             $table->date('date_of_birth');
             $table->smallInteger('gender');
             $table->date('join_date')->nullable();
-            $table->foreignId('group_id')->constrained('groups')->cascadeOnDelete();
+            $table->integer('grade_code');
+            $table->string('section_code');
             $table->foreignId('school_term_id')->constrained('school_terms');
             $table->timestamps();
         });

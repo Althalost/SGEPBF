@@ -9,7 +9,7 @@ class StudentRecord extends Model
 {
     use HasFactory;
 
-    public function term(){
+    public function schoolTerm(){
         return $this->belongsTo(SchoolTerm::class);
     }
 }

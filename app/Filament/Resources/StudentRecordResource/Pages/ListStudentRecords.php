@@ -10,10 +10,5 @@ class ListStudentRecords extends ListRecords
 {
     protected static string $resource = StudentRecordResource::class;
 
-    protected function getHeaderActions(): array
-    {
-        return [
-            Actions\CreateAction::make(),
-        ];
-    }
+
 }
