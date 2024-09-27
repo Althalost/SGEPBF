@@ -12,4 +12,13 @@ class StudentRecord extends Model
     public function schoolTerm(){
         return $this->belongsTo(SchoolTerm::class);
     }
+
+    public function student(){
+        return $this->belongsTo(Student::class);
+    }
+
+    public function getStudentGradeAttribute()
+    {
+        return $this->full_name . ' ' . $this->grade_code . '° grade';
+    }
 }

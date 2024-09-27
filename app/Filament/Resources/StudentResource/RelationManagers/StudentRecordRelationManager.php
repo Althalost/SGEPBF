@@ -1,14 +1,11 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Resources\StudentResource\RelationManagers;
 
-use App\Filament\Resources\StudentRecordResource\Pages;
-use App\Filament\Resources\StudentRecordResource\RelationManagers;
-use App\Models\StudentRecord;
 use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Infolists;
@@ -16,48 +13,11 @@ use Filament\Infolists\Infolist;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class StudentRecordResource extends Resource
+class StudentRecordRelationManager extends RelationManager
 {
-    protected static ?string $model = StudentRecord::class;
+    protected static string $relationship = 'studentRecord';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
-    protected static bool $shouldRegisterNavigation = false; 
-
-    public static function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-                //
-              /*   Forms\Components\TextInput::make('full_name')
-                ->required()
-                ->maxLength(60),
-                Forms\Components\TextInput::make('ci')
-                ->required()
-                ->maxLength(20),
-                Forms\Components\TextInput::make('representative_full_name')
-                ->required()
-                ->maxLength(60),
-                Forms\Components\TextInput::make('representative_ci')
-                ->required()
-                ->maxLength(20),
-                Forms\Components\DatePicker::make('date_of_birth')
-                ->required(),
-                Forms\Components\Select::make('gender')
-                ->options([
-                    01 => 'Male',
-                    02 => 'Female'
-                ])
-                ->required(),
-                Forms\Components\DatePicker::make('join_date')
-                ->required(),
-                Forms\Components\TextInput::make('grade_code')
-                ->required(),
- */
-            ]);
-    }
-
-    public static function infolist(Infolist $infolist): Infolist
+    public function infolist(Infolist $infolist): Infolist
     {
         return $infolist
             ->schema([
@@ -75,9 +35,10 @@ class StudentRecordResource extends Resource
             ]);
     }
 
-    public static function table(Table $table): Table
+    public function table(Table $table): Table
     {
         return $table
+            ->recordTitleAttribute('student_grade')
             ->columns([
                 Tables\Columns\TextColumn::make('full_name')->searchable(),
                 Tables\Columns\TextColumn::make('ci')->searchable(),
@@ -103,30 +64,16 @@ class StudentRecordResource extends Resource
             ->filters([
                 //
             ])
+            ->headerActions([
+                //,
+            ])
             ->actions([
-                //Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
-    public static function getPages(): array
-    {
-        return [
-            'index' => Pages\ListStudentRecords::route('/'),
-            //'create' => Pages\CreateStudentRecord::route('/create'),
-            //'edit' => Pages\EditStudentRecord::route('/{record}/edit'),
-            'view' => Pages\ViewStudentRecord::route('/{record}/view'),
-        ];
     }
 }

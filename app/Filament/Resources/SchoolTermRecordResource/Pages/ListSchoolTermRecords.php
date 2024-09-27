@@ -10,10 +10,4 @@ class ListSchoolTermRecords extends ListRecords
 {
     protected static string $resource = SchoolTermRecordResource::class;
 
-    protected function getHeaderActions(): array
-    {
-        return [
-            Actions\CreateAction::make(),
-        ];
-    }
 }

@@ -19,6 +19,8 @@ class SchoolTermRecordResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static bool $shouldRegisterNavigation = false; 
+
     public static function form(Form $form): Form
     {
         return $form
@@ -39,7 +41,7 @@ class SchoolTermRecordResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                //
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -59,8 +61,8 @@ class SchoolTermRecordResource extends Resource
     {
         return [
             'index' => Pages\ListSchoolTermRecords::route('/'),
-            'create' => Pages\CreateSchoolTermRecord::route('/create'),
-            'edit' => Pages\EditSchoolTermRecord::route('/{record}/edit'),
+            //'create' => Pages\CreateSchoolTermRecord::route('/create'),
+            //'edit' => Pages\EditSchoolTermRecord::route('/{record}/edit'),
         ];
     }
 }

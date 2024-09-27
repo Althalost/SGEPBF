@@ -6,6 +6,7 @@ use App\Filament\Resources\StudentResource\Pages;
 use App\Filament\Resources\StudentResource\RelationManagers;
 use App\Filament\Resources\StudentResource\RelationManagers\NotesRelationManager;
 use App\Filament\Resources\StudentResource\RelationManagers\RepresentativesRelationManager;
+use App\Filament\Resources\StudentResource\RelationManagers\StudentRecordRelationManager;
 use App\Models\Grade;
 use App\Models\Group;
 use App\Models\Representative;
@@ -136,6 +137,7 @@ class StudentResource extends Resource
             //
             RepresentativesRelationManager::class,
             NotesRelationManager::class,
+            StudentRecordRelationManager::class,
         ];
     }
 

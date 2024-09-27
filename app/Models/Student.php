@@ -23,4 +23,8 @@ class Student extends Model
     {
         return $this->hasMany(Note::class);
     }
+
+    public function studentRecord(){
+        return $this->hasMany(StudentRecord::class,  'id', 'id');
+    }
 }

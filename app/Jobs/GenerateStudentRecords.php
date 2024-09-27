@@ -56,7 +56,7 @@ class GenerateStudentRecords implements ShouldQueue
                     'grade_code' => $student->group->grade->code,
                     'section_code' => $student->group->section->code,
                     'school_term_id' => $currentTerm->id,
-                    //'join_date' => $student->join_date,
+                    'join_date' => $student->join_date,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
