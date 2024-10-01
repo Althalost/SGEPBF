@@ -91,13 +91,15 @@ class StudentResource extends Resource
                 Select::make('representatives')
                     ->relationship('representatives', 'full_name')
                     ->label('representatives')
+                    ->placeholder('add a representative')
                     ->searchable()
                     ->multiple()
                     ->options(Representative::orderBy('id', 'DESC')->pluck('full_name', 'id'))
                     ->default(fn () => Representative::latest('id')->limit(1)->get()->pluck('id')->toArray())
                     //->default([Representative::latest()->first()->id => Representative::latest()->first()->full_name])
                     //->default(Representative::latest()->first()->id)
-                    ->preload(),
+                    ->preload()
+                    ->required(),
             
 
             ]);
@@ -109,13 +111,21 @@ class StudentResource extends Resource
             ->columns([
                 //
                 Tables\Columns\TextColumn::make('full_name')
-                ->searchable(),
+                    ->searchable(),
                 //Tables\Columns\TextColumn::make('students.full_name'),
-                Tables\Columns\TextColumn::make('representatives.full_name'),
+                Tables\Columns\TextColumn::make('representatives.full_name')
+                    ->placeholder('without registered representative.')
+                    ->wrap(),
                 Tables\Columns\TextColumn::make('representatives.phone')->label('Phone'),
-                Tables\Columns\TextColumn::make('group.grade.code')->suffix('° grado'),
+                Tables\Columns\TextColumn::make('representatives.address'),
+                Tables\Columns\TextColumn::make('group.grade.code')
+                    ->suffix('° grado')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('group.section.code'),
             ])
+            ->defaultSort('group.grade.code','asc')
+            ->searchPlaceholder('Search (Ci, Name)')
+            ->striped()
             ->recordUrl(fn (Model $record): 
                     string => StudentResource::getUrl('edit', ['record' => $record]))
             ->filters([

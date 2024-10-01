@@ -19,6 +19,8 @@ class SchoolTermResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationLabel = 'Manage School Terms';
+
     public static function form(Form $form): Form
     {
         return $form
