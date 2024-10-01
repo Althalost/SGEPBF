@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('date_of_birth');
             $table->smallInteger('gender');
             $table->date('join_date')->nullable();
-            $table->foreignId('group_id')->constrained('groups')->cascadeOnDelete();
+            $table->foreignId('group_id')->nullable()->constrained('groups')->cascadeOnDelete();
             $table->timestamps();
         });
     }

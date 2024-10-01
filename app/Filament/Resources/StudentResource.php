@@ -6,6 +6,7 @@ use App\Filament\Resources\StudentResource\Pages;
 use App\Filament\Resources\StudentResource\RelationManagers;
 use App\Filament\Resources\StudentResource\RelationManagers\NotesRelationManager;
 use App\Filament\Resources\StudentResource\RelationManagers\RepresentativesRelationManager;
+use App\Filament\Resources\StudentResource\RelationManagers\StudentMedicalRecordRelationManager;
 use App\Filament\Resources\StudentResource\RelationManagers\StudentRecordRelationManager;
 use App\Models\Grade;
 use App\Models\Group;
@@ -56,33 +57,33 @@ class StudentResource extends Resource
                 ->required(),
                 Forms\Components\DatePicker::make('join_date'),
                 Forms\Components\Select::make('group_id')
-                ->label('Group')
-                //->relationship('group' , 'id' )
-                ->options(function () {
-                    return Group::with(['grade', 'section'])->get()->mapWithKeys(function ($group) {
-                        return [$group->id => $group->grade->code . '° grade - "' . $group->section->code . '"'];
-                    });
-                })
-                ->searchable()
-                ->preload()
-                ->createOptionForm([
-                    Forms\Components\TextInput::make('classroom')
-                    ->maxLength(60),
-                    Forms\Components\Select::make('grade_id')
-                    ->relationship('grade', 'code')
+                    ->label('Group')
+                    ->relationship('group' , 'id' )
+                    ->options(function () {
+                        return Group::with(['grade', 'section'])->get()->mapWithKeys(function ($group) {
+                            return [$group->id => $group->grade->code . '° grade - "' . $group->section->code . '"'];
+                        });
+                    })
                     ->searchable()
                     ->preload()
-                    ->required(),
-                    Forms\Components\Select::make('section_id')
-                    ->relationship('section', 'code')
-                    ->searchable()
-                    ->preload()
-                    ->required(),
-                    Forms\Components\Select::make('teacher_id')
-                    ->relationship('teacher', 'full_name')
-                    ->searchable()
-                    ->preload()
-                    ->required(),
+                    ->createOptionForm([
+                        Forms\Components\TextInput::make('classroom')
+                        ->maxLength(60),
+                        Forms\Components\Select::make('grade_id')
+                        ->relationship('grade', 'code')
+                        ->searchable()
+                        ->preload()
+                        ->required(),
+                        Forms\Components\Select::make('section_id')
+                        ->relationship('section', 'code')
+                        ->searchable()
+                        ->preload()
+                        ->required(),
+                        Forms\Components\Select::make('teacher_id')
+                        ->relationship('teacher', 'full_name')
+                        ->searchable()
+                        ->preload()
+                        ->required(),
                     
                 ])
                 ->required(),
@@ -134,10 +135,10 @@ class StudentResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
             RepresentativesRelationManager::class,
             NotesRelationManager::class,
             StudentRecordRelationManager::class,
+            StudentMedicalRecordRelationManager::class,
         ];
     }
 

@@ -27,4 +27,8 @@ class Student extends Model
     public function studentRecord(){
         return $this->hasMany(StudentRecord::class,  'id', 'id');
     }
+
+    public function studentMedicalRecord(){
+        return $this->hasMany(StudentMedicalRecord::class,  'student_id', 'id');
+    }
 }
