@@ -42,26 +42,30 @@ class StudentResource extends Resource
             ->schema([
                 //
                 Forms\Components\TextInput::make('full_name')
+                ->label(__(key: 'Full Name'))
                 ->required()
                 ->maxLength(60),
                 Forms\Components\TextInput::make('ci')
                 ->required()
                 ->maxLength(20),
                 Forms\Components\DatePicker::make('date_of_birth')
+                ->label(__(key: 'Date of birth'))
                 ->required(),
                 Forms\Components\Select::make('gender')
+                ->label(__(key: 'Gender'))
                 ->options([
-                    01 => 'Male',
-                    02 => 'Female'
+                    01 => __('Male'),
+                    02 => __('Female')
                 ])
                 ->required(),
-                Forms\Components\DatePicker::make('join_date'),
+                Forms\Components\DatePicker::make('join_date')
+                ->label(__(key: 'Join date')),
                 Forms\Components\Select::make('group_id')
-                    ->label('Group')
+                    ->label(__(key: 'Group'))
                     ->relationship('group' , 'id' )
                     ->options(function () {
                         return Group::with(['grade', 'section'])->get()->mapWithKeys(function ($group) {
-                            return [$group->id => $group->grade->code . '° grade - "' . $group->section->code . '"'];
+                            return [$group->id => $group->grade->code . '° ' . __('Grade') . ' - ' . $group->section->code . '"'];
                         });
                     })
                     ->searchable()
@@ -90,8 +94,8 @@ class StudentResource extends Resource
              
                 Select::make('representatives')
                     ->relationship('representatives', 'full_name')
-                    ->label('representatives')
-                    ->placeholder('add a representative')
+                    ->label(__(key: 'Representatives'))
+                    ->placeholder(__('add a representative'))
                     ->searchable()
                     ->multiple()
                     ->options(Representative::orderBy('id', 'DESC')->pluck('full_name', 'id'))
@@ -111,17 +115,23 @@ class StudentResource extends Resource
             ->columns([
                 //
                 Tables\Columns\TextColumn::make('full_name')
+                    ->label(__(key: 'Full Name'))
                     ->searchable(),
                 //Tables\Columns\TextColumn::make('students.full_name'),
                 Tables\Columns\TextColumn::make('representatives.full_name')
+                    ->label(__(key: 'Representatives'))
                     ->placeholder('without registered representative.')
                     ->wrap(),
-                Tables\Columns\TextColumn::make('representatives.phone')->label('Phone'),
-                Tables\Columns\TextColumn::make('representatives.address'),
+                Tables\Columns\TextColumn::make('representatives.phone')
+                    ->label(__(key: 'Phone')),
+                Tables\Columns\TextColumn::make('representatives.address')
+                    ->label(__(key: 'Address')),
                 Tables\Columns\TextColumn::make('group.grade.code')
+                    ->label(__(key: 'Grade'))
                     ->suffix('° grado')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('group.section.code'),
+                Tables\Columns\TextColumn::make('group.section.code')
+                    ->label(__(key: 'section')),
             ])
             ->defaultSort('group.grade.code','asc')
             ->searchPlaceholder('Search (Ci, Name)')

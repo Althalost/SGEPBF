@@ -1,0 +1,20 @@
+{
+    "section": "Sección",
+    "Address": "Direccion",
+    "Full Name": "Nombre completo",
+    "Email": "Correo electronico",
+    "Phone": "Numero de Telefono",
+    "Representatives": "Representantes",
+    "Grade": "Grado",
+    "Date of birth": "Fecha de Nacimiento",
+    "Gender": "Genero",
+    "Join date": "Fecha de Entrada",
+    "Group": "Grupo",
+    "Male": "Masculino",
+    "Female": "Femenino",
+    "add a representative": "Añade un Representante",
+    "School Grade Management": "Administrar Grados",
+    "Student Management": "Control de Estudiantes",
+    "Teacher Management": "Profesores",
+    "Manage School Terms": "Gestionar Periodos"
+}

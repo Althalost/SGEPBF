@@ -19,26 +19,29 @@ class TeacherResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationLabel = 'Teacher Management';
+    public static function getNavigationLabel(): string
+    {
+        return __('Teacher Management');
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 //
-                Forms\Components\TextInput::make('full_name')
+                Forms\Components\TextInput::make('full_name')->label(__(key: 'Full Name'))
                 ->required()
                 ->maxLength(60),
                 Forms\Components\TextInput::make('ci')
                 ->required()
                 ->maxLength(20),
-                Forms\Components\TextInput::make('email')
+                Forms\Components\TextInput::make('email')->label(__(key: 'Email'))
                 ->required()
                 ->maxLength(30),
-                Forms\Components\TextInput::make('phone')
+                Forms\Components\TextInput::make('phone')->label(__(key: 'Phone'))
                 ->required()
                 ->maxLength(20),
-                Forms\Components\TextInput::make('address')
+                Forms\Components\TextInput::make(name: 'address')->label(__(key: 'Address'))
                 ->required()
                 ->maxLength(60),
             ]);
@@ -54,7 +57,7 @@ class TeacherResource extends Resource
                 Tables\Columns\TextColumn::make('phone'),
                 Tables\Columns\TextColumn::make('address'),
                 Tables\Columns\TextColumn::make('groups.grade.code')->suffix('° grado'),
-                Tables\Columns\TextColumn::make('groups.section.code'),
+                Tables\Columns\TextColumn::make('groups.section.code')->label(__(key: 'section')),
             ])
             ->filters([
                 //
