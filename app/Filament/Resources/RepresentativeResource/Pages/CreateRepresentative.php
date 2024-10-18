@@ -24,7 +24,7 @@ class CreateRepresentative extends CreateRecord
             parent::getFormActions(),
             [
                 Action::make('skipCreate')
-                    ->label('The representative is already registered')
+                    ->label(__('The representative is already registered'))
                     ->url(fn (): string => route('filament.admin.resources.students.create'))
                     ->color('primary'),
             ]

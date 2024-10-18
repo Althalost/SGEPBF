@@ -28,6 +28,7 @@
     "Add Representative": "Añadir Representante",
     "Create Student": "Registrar Estudiante",
     "You are creating a student record, make sure to add the respective relationship with representative after create it, in the tabla under this form.": "Usted esta registrando un estudiante, asegurese de registrar un representante y de establecer el parentesco, puede hacerlo en la tabla de representantes debajo del formulario del estudiante.",
+    "The representative is already registered": "El Representante ya está registrado",
     "Yes, I got it": "Si, Entiendo",
     "Search (Ci, Name)": "Buscar (Ci o Nombre)",
     "N° of Groups": "N° de Grupos",

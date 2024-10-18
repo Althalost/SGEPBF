@@ -22,23 +22,32 @@ class RepresentativeResource extends Resource
 
     protected static bool $shouldRegisterNavigation = false;
 
+    public static function getModelLabel(): string
+    {
+        return __('Representative');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 //
                 Forms\Components\TextInput::make('full_name')
+                ->label(__('Full Name'))
                 ->required()
                 ->maxLength(60),
                 Forms\Components\TextInput::make('ci')
                 ->required()
                 ->maxLength(20),
                 Forms\Components\TextInput::make('email')
+                ->label(__('Email'))
                 ->maxLength(30),
                 Forms\Components\TextInput::make('phone')
+                ->label(__('Phone'))
                 ->required()
                 ->maxLength(20),
                 Forms\Components\TextInput::make('address')
+                ->label(__('Address'))
                 ->required()
                 ->maxLength(60),
             ]);
