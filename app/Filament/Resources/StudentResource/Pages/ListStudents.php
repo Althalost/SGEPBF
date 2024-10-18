@@ -21,7 +21,7 @@ class ListStudents extends ListRecords
     {
         return [
             Actions\CreateAction::make()
-            ->label('Add Student')
+            ->label(__('Create Student'))
             ->url(fn (): string => route('filament.admin.resources.representatives.create')),
         ];
     }

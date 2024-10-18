@@ -20,7 +20,6 @@ class StudentsRelationManager extends RelationManager
 
     protected static bool $shouldRegisterNavigation = true;
 
-
     public function form(Form $form): Form
     {
         return $form
@@ -35,19 +34,25 @@ class StudentsRelationManager extends RelationManager
     {
         return $table
             ->recordTitleAttribute('full_name')
+            ->modelLabel(__('Student'))
             ->columns([
-                Tables\Columns\TextColumn::make('full_name'),
-                Tables\Columns\TextColumn::make('representatives.full_name'),
-                Tables\Columns\TextColumn::make('representatives.phone')->label('Phone'),
-                Tables\Columns\TextColumn::make('group.grade.code')->suffix('° grado'),
-                Tables\Columns\TextColumn::make('group.section.code'),
+                Tables\Columns\TextColumn::make('full_name')
+                    ->label(__('Full Name')),
+                Tables\Columns\TextColumn::make('representatives.full_name')
+                    ->label(__('Representatives')),
+                Tables\Columns\TextColumn::make('representatives.phone')
+                    ->label(__('Phone')),
+                Tables\Columns\TextColumn::make('group.grade.code')->suffix('° grado')
+                    ->label(__('Grade')),
+                Tables\Columns\TextColumn::make('group.section.code')
+                    ->label(__('section')),
             ])
             ->filters([
                 //
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make()
-                ->label('Add Student')
+                ->label(__('Create Student'))
                 ->url(fn (): string => route('filament.admin.resources.representatives.create')),
             ])
             ->actions([

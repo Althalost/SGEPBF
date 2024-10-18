@@ -20,7 +20,8 @@ class EditGroup extends EditRecord
         $url = url()->current();
         //$url = str_replace(["http://127.0.0.1:8000/admin/grades/", "/groups"], "", $url);
         $url = explode("/", $url);
-        return __('Viewing students for the group: ' . $url[5]);
+        $title = __('Viewing students for the group: ') . $url[5];
+        return $title;
     }
 
     protected function getFormActions(): array

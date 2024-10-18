@@ -16,6 +16,16 @@ class RepresentativesRelationManager extends RelationManager
 {
     protected static string $relationship = 'representatives';
 
+    public static function getModelLabel(): string
+    {
+        return __('Representative');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Representatives');
+    }
+
     protected $listeners = ['refreshRepresentativeTable' => '$refresh'];
 
     public function form(Form $form): Form
@@ -53,17 +63,22 @@ class RepresentativesRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('full_name')
             ->columns([
-                Tables\Columns\TextColumn::make('full_name'),
+                Tables\Columns\TextColumn::make('full_name')
+                    ->label(__('Full Name')),
                 Tables\Columns\TextColumn::make('pivot.relationship')
-                    ->label('Relationship'),
-                Tables\Columns\TextColumn::make('phone'),
-                Tables\Columns\TextColumn::make('address'),
+                    ->label(__('Relationship')),
+                Tables\Columns\TextColumn::make('phone')
+                    ->label(__('Phone')),
+                Tables\Columns\TextColumn::make('address')
+                    ->label(__('Address')),
             ])
+            ->modelLabel(__('Representative'))
+            ->pluralModelLabel(__('Representatives'))
             ->filters([
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make()->label(__('Add Representative')),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

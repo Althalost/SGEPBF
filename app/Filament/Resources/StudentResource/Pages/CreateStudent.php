@@ -26,9 +26,9 @@ class CreateStudent extends CreateRecord
         return parent::getCreateFormAction()
             ->submit(null)
             ->requiresConfirmation()
-            ->modalHeading('Create Student')
-            ->modalDescription('You are creating a student record, make sure to add the respective relationship with representative after create it, in the tabla under this form.')
-            ->modalSubmitActionLabel('Yes, I got it')
+            ->modalHeading(__('Create Student'))
+            ->modalDescription(__('You are creating a student record, make sure to add the respective relationship with representative after create it, in the tabla under this form.'))
+            ->modalSubmitActionLabel(__('Yes, I got it'))
             ->action(function () {
                 $this->closeActionModal();
                 $this->create();

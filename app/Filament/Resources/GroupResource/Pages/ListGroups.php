@@ -6,6 +6,7 @@ use App\Filament\Resources\GroupResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Guava\FilamentNestedResources\Concerns\NestedPage;
+use Illuminate\Contracts\Support\Htmlable;
 
 class ListGroups extends ListRecords
 {
@@ -21,7 +22,10 @@ class ListGroups extends ListRecords
             Actions\EditAction::make(),
         ];
     }
-    
-    protected ?string $subheading = 'Viewing groups for the grade: ';
+
+    public function getSubheading(): string|Htmlable|null
+    {
+        return __('Viewing groups for the grade: ');
+    }
 
 }

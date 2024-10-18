@@ -24,9 +24,9 @@ class EditGrade extends EditRecord
     public function getHeading(): string
     {
         $url = url()->current();
-        //$url = str_replace(["http://127.0.0.1:8000/admin/grades/", "/groups"], "", $url);
         $url = explode("/", $url);
-        return __('Viewing groups for the grade: ' . $url[5]);
+        $title = __('Viewing groups for the grade: ') . $url[5];
+        return $title;
     }
 
     protected function getFormActions(): array

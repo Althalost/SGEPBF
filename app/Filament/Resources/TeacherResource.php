@@ -19,6 +19,11 @@ class TeacherResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getModelLabel(): string
+    {
+        return __('Teacher');
+    }
+
     public static function getNavigationLabel(): string
     {
         return __('Teacher Management');
@@ -52,12 +57,19 @@ class TeacherResource extends Resource
         return $table
             ->columns([
                 //
-                Tables\Columns\TextColumn::make('full_name'),
-                Tables\Columns\TextColumn::make('email'),
-                Tables\Columns\TextColumn::make('phone'),
-                Tables\Columns\TextColumn::make('address'),
-                Tables\Columns\TextColumn::make('groups.grade.code')->suffix('° grado'),
-                Tables\Columns\TextColumn::make('groups.section.code')->label(__(key: 'section')),
+                Tables\Columns\TextColumn::make('full_name')
+                    ->label(__('Nombre Completo')),
+                Tables\Columns\TextColumn::make('email')
+                    ->label(__('Email')),
+                Tables\Columns\TextColumn::make('phone')
+                    ->label(__('Phone')),
+                Tables\Columns\TextColumn::make('address')
+                    ->label(__('Address')),
+                Tables\Columns\TextColumn::make('groups.grade.code')
+                    ->label(__('Grade'))
+                    ->suffix('° grado'),
+                Tables\Columns\TextColumn::make('groups.section.code')
+                    ->label(__('section')),
             ])
             ->filters([
                 //

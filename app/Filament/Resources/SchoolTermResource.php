@@ -19,6 +19,11 @@ class SchoolTermResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getModelLabel(): string
+    {
+        return __('School Term');
+    }
+
     public static function getNavigationLabel(): string
     {
         return __('Manage School Terms');
@@ -29,8 +34,10 @@ class SchoolTermResource extends Resource
         return $form
             ->schema([
                 Forms\Components\DatePicker::make('start_date')
+                ->label(__('Start Date'))
                 ->required(),
                 Forms\Components\DatePicker::make('end_date')
+                ->label(__('End Date'))
                 ->required(),
             ]);
     }
@@ -39,11 +46,13 @@ class SchoolTermResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('start_date')->date()->sortable(),
-                Tables\Columns\TextColumn::make('end_date')->date()->sortable(),
+                Tables\Columns\TextColumn::make('start_date')
+                    ->label(__('Start Date'))->date()->sortable(),
+                Tables\Columns\TextColumn::make('end_date')
+                ->label(__('End Date'))->date()->sortable(),
                 Tables\Columns\IconColumn::make('active')
                         ->boolean()
-                        ->label('Activo')
+                        ->label(__('Active'))
                         ->trueIcon('heroicon-o-check-circle')
                         ->falseIcon('heroicon-o-x-circle'),
             ])

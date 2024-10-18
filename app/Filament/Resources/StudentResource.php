@@ -36,6 +36,11 @@ class StudentResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getModelLabel(): string
+    {
+        return __('Student');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -117,7 +122,6 @@ class StudentResource extends Resource
                 Tables\Columns\TextColumn::make('full_name')
                     ->label(__(key: 'Full Name'))
                     ->searchable(),
-                //Tables\Columns\TextColumn::make('students.full_name'),
                 Tables\Columns\TextColumn::make('representatives.full_name')
                     ->label(__(key: 'Representatives'))
                     ->placeholder('without registered representative.')
@@ -134,7 +138,7 @@ class StudentResource extends Resource
                     ->label(__(key: 'section')),
             ])
             ->defaultSort('group.grade.code','asc')
-            ->searchPlaceholder('Search (Ci, Name)')
+            ->searchPlaceholder(__('Search (Ci, Name)'))
             ->striped()
             ->recordUrl(fn (Model $record): 
                     string => StudentResource::getUrl('edit', ['record' => $record]))

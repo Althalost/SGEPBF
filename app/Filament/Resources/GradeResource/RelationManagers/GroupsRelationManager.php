@@ -21,6 +21,11 @@ class GroupsRelationManager extends RelationManager
 
     public static string $nestedResource = GroupResource::class;
 
+    public static function getModelLabel(): string
+    {
+        return __('Group');
+    }
+
     public function form(Form $form): Form
     {
         return $form
@@ -35,11 +40,13 @@ class GroupsRelationManager extends RelationManager
     {
         return $table
             ->recordTitleAttribute('id')
+            ->modelLabel(__('Group'))
+            ->pluralModelLabel(__('Groups'))
             ->columns([
                 Tables\Columns\TextColumn::make('grade_section')
-                ->label('Grade/Section')
-                ->getStateUsing(fn ($record) => $record->grade->code . '° grade - "' . $record->section->code . '"'),
-                Tables\Columns\TextColumn::make('students_count')->counts('students')->label('Students'),
+                ->label(__('Grade/Section'))
+                ->getStateUsing(fn ($record) => $record->grade->code . '° grado - "' . $record->section->code . '"'),
+                Tables\Columns\TextColumn::make('students_count')->counts('students')->label(__('Students')),
             ])
             ->filters([
                 //

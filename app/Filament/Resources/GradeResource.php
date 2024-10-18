@@ -28,7 +28,10 @@ class GradeResource extends Resource
 
     protected static bool $shouldRegisterNavigation = false; 
 
-    
+    public static function getModelLabel(): string
+    {
+        return __('Grade');
+    }
 
     public static function form(Form $form): Form
     {
@@ -46,9 +49,9 @@ class GradeResource extends Resource
         return $table
             ->columns([
                 //
-                Tables\Columns\TextColumn::make('code')->label('Grados')->suffix('° grado'),
-                Tables\Columns\TextColumn::make('groups_count')->counts('groups')->label('N° de grupos'),
-                Tables\Columns\TextColumn::make('groups.section.code')->label('Seccion'),
+                Tables\Columns\TextColumn::make('code')->label(__('Grades'))->suffix(__('° grado')),
+                Tables\Columns\TextColumn::make('groups_count')->counts('groups')->label(__('N° of Groups')),
+                Tables\Columns\TextColumn::make('groups.section.code')->label(__('section')),
             ])
             ->filters([
                 //

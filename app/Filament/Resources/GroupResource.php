@@ -27,6 +27,11 @@ class GroupResource extends Resource
 
     protected static bool $shouldRegisterNavigation = false; 
 
+    public static function getModelLabel(): string
+    {
+        return __('Group');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
